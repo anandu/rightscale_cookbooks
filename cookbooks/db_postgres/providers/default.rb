@@ -355,7 +355,7 @@ action :enable_replication do
     block do
       Chef::Log.info "Wiping existing runtime config files"
       runtime_config_file = Dir.glob("#{node[:db][:datadir]}/pg_xlog/*")
-      FileUtils.rm_rf(backup_config_file)
+      FileUtils.rm_rf(runtime_config_file)
     end
   end
 
