@@ -325,6 +325,7 @@ action :enable_replication do
   # Stopping Postgresql service
   action_stop
 
+  # Get in sync with Master
   ruby_block "Sync to Master data" do
     not_if { current_restore_process == :no_restore }
     block do
@@ -332,6 +333,7 @@ action :enable_replication do
     end
   end
 
+  # Configure recovery.conf
   ruby_block "configure_replication" do
     not_if { current_restore_process == :no_restore }
     block do
@@ -345,12 +347,11 @@ action :enable_replication do
   ruby_block "reconfigure_replication" do
     only_if { current_restore_process == :no_restore }
     block do
-      master_info = RightScale::Database::PostgreSQL::Helper.load_master_info_file(node)
-      newmaster_host = node[:db][:current_master_ip]
       RightScale::Database::PostgreSQL::Helper.reconfigure_replication_info(newmaster_host, rep_user, rep_pass, app_name)
     end
   end
 
+  # Removing runtime pg_xlogs
   ruby_block "wipe_existing_runtime_config" do
     not_if { current_restore_process == :no_restore }
     block do
