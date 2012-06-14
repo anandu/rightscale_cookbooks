@@ -104,17 +104,16 @@ action :post_backup_cleanup do
 end
 
 action :set_privileges do
-    priv = new_resource.privilege
-    priv_username = new_resource.privilege_username
-    priv_password = new_resource.privilege_password
-    priv_database = new_resource.privilege_database
-    db_postgres_set_privileges "setup db privileges" do
-      preset priv
-      username priv_username
-      password priv_password
-      database priv_database
-      not_if { node[:db][:this_is_master]  == false }
-    end
+  priv = new_resource.privilege
+  priv_username = new_resource.privilege_username
+  priv_password = new_resource.privilege_password
+  priv_database = new_resource.privilege_database
+  db_postgres_set_privileges "setup db privileges" do
+    preset priv
+    username priv_username
+    password priv_password
+    database priv_database
+    not_if { node[:db][:this_is_master]  == false }
   end
 end
 
