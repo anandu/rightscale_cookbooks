@@ -104,9 +104,6 @@ action :post_backup_cleanup do
 end
 
 action :set_privileges do
-  if ::File.exist?("#{node[:db][:datadir]}/recovery.conf")
-    Chef::Log.info("no need to rerun on reboot for slave")
-  else
     priv = new_resource.privilege
     priv_username = new_resource.privilege_username
     priv_password = new_resource.privilege_password
@@ -116,6 +113,7 @@ action :set_privileges do
       username priv_username
       password priv_password
       database priv_database
+      not_if { node[:db][:this_is_master]  == false }
     end
   end
 end

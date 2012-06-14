@@ -37,7 +37,7 @@ set_unless[:db][:dns][:ttl] = "60"
 set_unless[:db][:init_status] = :uninitialized
 
 # Default value for DB master/slave check
-set_unless[:db][:this_is_master] = false
+set_unless[:db][:this_is_master] = "" 
 
 # Instance UUID and ip default values
 set_unless[:db][:current_master_uuid] = nil
