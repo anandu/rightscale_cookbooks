@@ -323,7 +323,7 @@ action :enable_replication do
   end
 
   # Stopping Postgresql service
-  db node[:db][:data_dir] do
+  service "postgresql-#{node[:db_postgres][:version]}" do
     not_if { current_restore_process == :no_restore }
     action :stop
   end
