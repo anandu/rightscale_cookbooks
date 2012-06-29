@@ -10,7 +10,7 @@
   or your own implementation of "app" resource. See "app" cookbook README for
   details.
 * Requires a VM launched from a RightScale managed RightImage
-* Tested on CentOS 5.6 RightImage
+* Tested on CentOS 5.8 RightImage
 * Tested on Ubuntu 10.04 RightImage
 * Tested on RedHat 5.8 RightImage
 
