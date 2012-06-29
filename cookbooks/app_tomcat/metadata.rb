@@ -80,11 +80,17 @@ attribute "app_tomcat/db_adapter",
   :description => "Enter database adapter which will be used to connect to the database. example: mysql",
   :default => "mysql",
   :choice => [ "mysql", "postgresql" ],
-  :recipes => ["app_tomcat::default"]
+  :recipes => [
+    "app_tomcat::default_6",
+    "app_tomcat::default_7"
+   ]
 
 attribute "app_tomcat/datasource_name",
   :display_name => "Container datasource  name",
   :description => "This name is used to setup the database connection with the application server.  You should set the attribute if your application is compiled to use a different datasource name.  example: jdbc/MyConnDB",
   :required => "optional",
   :default => "jdbc/ConnDB",
-  :recipes => ["app_tomcat::default"]
+  :recipes => [
+    "app_tomcat::default_6",
+    "app_tomcat::default_7"
+   ]

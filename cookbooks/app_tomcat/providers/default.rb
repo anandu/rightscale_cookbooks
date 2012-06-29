@@ -37,7 +37,8 @@ end
 action :install do
 
   # Adding custmized repo for tomcat7 rpm, later when these rpm are part of the mirror, it should be removed
-  version=node[:app_tomcat][:version].to_i
+  version = node[:app_tomcat][:version].to_i
+
   template "/etc/yum.repos.d/tomcat7.repo" do
     source "tomcat7.repo.erb"
     mode "0755"
@@ -387,7 +388,7 @@ end
 # Setup monitoring tools for tomcat
 action :setup_monitoring do
 
-  version=node[:app_tomcat][:version]
+  version = node[:app_tomcat][:version].to_i
   log "  Setup of collectd monitoring for tomcat"
   rightscale_enable_collectd_plugin 'exec'
 
@@ -404,11 +405,11 @@ action :setup_monitoring do
     not_if do !::File.exists?("/usr/share/java/collectd.jar") end
   end
 
-  # Add collectd support to tomcat.conf
-  bash "Add collectd to tomcat.conf" do
+  # Add collectd support to tomcat#{version}.conf
+  bash "Add collectd to tomcat#{version}.conf" do
     flags "-ex"
     code <<-EOH
-      cat <<'EOF'>>/etc/tomcat#{version}/tomcat#{version}.conf
+      cat <<'EOF'>>"/etc/tomcat#{version}/tomcat#{version}.conf"
 CATALINA_OPTS="\$CATALINA_OPTS -Djcd.host=#{node[:rightscale][:instance_uuid]} -Djcd.instance=tomcat#{version} -Djcd.dest=udp://#{node[:rightscale][:servers][:sketchy][:hostname]}:3011 -Djcd.tmpl=javalang,tomcat -javaagent:/usr/share/tomcat#{version}/lib/collectd.jar"
     EOH
   end
