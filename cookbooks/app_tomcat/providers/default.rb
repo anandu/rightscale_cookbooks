@@ -7,8 +7,10 @@
 
 # Stop tomcat service
 action :stop do
+
+  version = node[:app_tomcat][:version].to_i
   log "  Running stop sequence"
-  service "tomcat6" do
+  service "tomcat#{version}" do
     action :stop
     persist false
   end
@@ -16,8 +18,10 @@ end
 
 # Start tomcat service
 action :start do
+
+  version = node[:app_tomcat][:version].to_i
   log "  Running start sequence"
-  service "tomcat6" do
+  service "tomcat#{version}" do
     action :start
     persist false
   end
@@ -36,9 +40,9 @@ end
 #Installing required packages and prepare system for tomcat
 action :install do
 
-  # Adding custmized repo for tomcat7 rpm, later when these rpm are part of the mirror, it should be removed
   version = node[:app_tomcat][:version].to_i
 
+  # Adding custmized repo for tomcat7 rpm, later when these rpm are part of the mirror, it should be removed
   template "/etc/yum.repos.d/tomcat7.repo" do
     source "tomcat7.repo.erb"
     mode "0755"
