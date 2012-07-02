@@ -55,7 +55,7 @@ node[:app][:destination]="#{node[:app][:root]}"
     source "tomcat7.repo.erb"
     owner "root"
     group "root"
-    mode "0755"
+    mode "0644"
     cookbook "app_tomcat"
   end
 
