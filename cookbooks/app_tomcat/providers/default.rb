@@ -42,14 +42,6 @@ action :install do
 
   version = node[:app_tomcat][:version].to_i
 
-  # Adding custmized repo for tomcat7 rpm, later when these rpm are part of the mirror, it should be removed
-  template "/etc/yum.repos.d/tomcat7.repo" do
-    source "tomcat7.repo.erb"
-    mode "0755"
-    cookbook 'app_tomcat'
-    only_if { version == "7" }
-  end
-
   packages = new_resource.packages
   log "  Packages which will be installed: #{packages}"
   packages .each do |p|
