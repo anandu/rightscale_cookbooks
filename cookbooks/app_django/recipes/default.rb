@@ -12,12 +12,14 @@ package "httpd" do
 end
 
 service "httpd" do
-  action[:enable,:start]
+  action[:start]
 end
 
 
 execute "tar" do
   djangotar = ::File.join(::File.dirname(__FILE__), "..", "files", "default", "Django-1.3.tar.gz")
+  installation_dir = "/tmp"
+  cwd installation_dir
   command "tar zxf #{djangotar}"
   action :run
 end
