@@ -12,7 +12,7 @@ package "httpd" do
 end
 
 service "httpd" do
-  action[:start]
+  action [:start]
 end
 
 
@@ -21,6 +21,8 @@ execute "tar" do
   installation_dir = "/tmp"
   cwd installation_dir
   command "tar zxf #{djangotar}"
+  cwd "Django-1.3" 
+  command "python setup.py install"
   action :run
 end
   
