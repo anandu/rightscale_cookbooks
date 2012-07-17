@@ -16,6 +16,7 @@
   "recommendations": {
   },
   "recipes": {
+    "app_django::default": "Installs the Django application server."
   },
   "groupings": {
   },
