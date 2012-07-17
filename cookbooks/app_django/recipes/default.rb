@@ -26,7 +26,7 @@ end
   
 execute "install_Django" do
   installation_dir = "/tmp"
-  cwd installation_dir
-  command "./Django-1.3/python setup.py install"
+  cwd installation_dir + "/" + "Django-1.3" 
+  command "python setup.py install"
   action :run
 end
