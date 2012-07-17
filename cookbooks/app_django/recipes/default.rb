@@ -21,7 +21,6 @@ execute "tar" do
   installation_dir = "/tmp"
   cwd installation_dir
   command "tar zxf #{djangotar}"
-  command "./Django-1.3/python setup.py install"
   action :run
 end
   
