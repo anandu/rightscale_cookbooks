@@ -107,11 +107,15 @@ action :set_privileges do
   if ::File.exist?("#{node[:db_postgres][:datadir]}/recovery.conf")
     log "  No need to rerun on reboot for slave"
   else
+    priv = new_resource.privilege
+    priv_username = new_resource.privilege_username
+    priv_password = new_resource.privilege_password
+    priv_database = new_resource.privilege_database
     db_postgres_set_privileges "setup db privileges" do
-      preset new_resource.privilege
-      username new_resource.privilege_username
-      password new_resource.privilege_password
-      database new_resource.privilege_database
+      preset priv
+      username priv_username
+      password priv_password
+      database priv_database
     end
   end
 end
