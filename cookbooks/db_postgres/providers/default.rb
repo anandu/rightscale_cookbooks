@@ -141,9 +141,9 @@ action :install_client do
   end
 
   # Link postgresql pg_config to default system bin path - required by app servers
-  link "/usr/pgsql-#{node[:db_postgres][:version]}/bin/pg_config" do
-    to "/usr/bin/"
-    not_if "test -f /usr/bin/pg_config"
+  link "/usr/bin/pg_config" do
+    to "/usr/pgsql-#{node[:db_postgres][:version]}/bin/pg_config"
+    not_if { ::File.exists?("/usr/bin/pg_config") }
   end
 
   # Install PostgreSQL client gem
