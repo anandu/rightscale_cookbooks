@@ -343,8 +343,11 @@ action :enable_replication do
     not_if { current_restore_process == :no_restore }
     block do
       Chef::Log.info "  Wiping existing runtime config files"
-      runtime_config_file = Dir.glob("#{node[:db_postgres][:datadir]}/pg_xlog/*")
-      FileUtils.rm_rf(runtime_config_file)
+      Dir.glob("#{node[:db_postgres][:datadir]}/pg_xlog/*").each do |item|
+        file item do
+          action: delete
+        end
+      end
     end
   end
 
@@ -353,9 +356,9 @@ action :enable_replication do
   # has to run the start command again.
   ruby_block "Start Postgresql service" do
     block do
-      5.times do
-        action_start
-      end
+      retries 5
+      retry_delay 2
+      action_start
     end
   end
 
