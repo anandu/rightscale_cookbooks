@@ -344,7 +344,7 @@ action :enable_replication do
     block do
       Chef::Log.info "  Wiping existing runtime config files"
       Dir.glob("#{node[:db_postgres][:datadir]}/pg_xlog/*").each do |item|
-        Chef::Resource::File item do
+        Chef::Provider::File item do
           action :delete
         end
       end
